@@ -7,18 +7,23 @@
     <style>
         :root {
             --bg-deep: #0a0a14;
-            --cell-bg: rgba(255, 255, 255, 0.07);
+            --cell-bg: #fafafa;
+            --cell-bg-alt: #f0f0f0;
             --cell-selected: #5b6ef5;
             --cell-found: #38a169;
             --gold: #f6ad55;
             --text-dim: rgba(255, 255, 255, 0.65);
             --text-bright: rgba(255, 255, 255, 0.92);
+            --text-cell: #1a1a1a;
+            --cell-border: #d5d8dc;
             --shadow-lg: 0 30px 80px rgba(0, 0, 0, 0.7);
             --radius-card: 20px;
             --radius-cell: 8px;
             --transition-fast: 0.05s ease;
             --transition-smooth: 0.2s ease;
             --safe-area-bottom: env(safe-area-inset-bottom, 0px);
+            --cell-size: 34px;
+            --cell-font: 1rem;
         }
 
         * {
@@ -89,12 +94,24 @@
         }
 
         @keyframes gradienteTop {
-            0%, 100% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
+            0%,
+            100% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
         }
         @keyframes brilloNombre {
-            0%, 100% { background-position: 0% 50%; filter: brightness(1); }
-            50% { background-position: 100% 50%; filter: brightness(1.4); }
+            0%,
+            100% {
+                background-position: 0% 50%;
+                filter: brightness(1);
+            }
+            50% {
+                background-position: 100% 50%;
+                filter: brightness(1.4);
+            }
         }
 
         .watermark-central {
@@ -117,8 +134,15 @@
         }
 
         @keyframes watermarkPulse {
-            0%, 100% { opacity: 0.5; transform: translate(-50%, -50%) rotate(-25deg) scale(1.5); }
-            50% { opacity: 0.8; transform: translate(-50%, -50%) rotate(-23deg) scale(1.6); }
+            0%,
+            100% {
+                opacity: 0.5;
+                transform: translate(-50%, -50%) rotate(-25deg) scale(1.5);
+            }
+            50% {
+                opacity: 0.8;
+                transform: translate(-50%, -50%) rotate(-23deg) scale(1.6);
+            }
         }
 
         .container {
@@ -162,8 +186,13 @@
             font-size: 1.8rem;
         }
         @keyframes gradienteText {
-            0%, 100% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
+            0%,
+            100% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
         }
         .header .subtitle {
             color: rgba(255, 255, 255, 0.35);
@@ -227,13 +256,18 @@
             -webkit-backdrop-filter: blur(10px);
             max-width: 100%;
         }
-        .top-controls select option { background: #1a1a2e; color: white; }
+        .top-controls select option {
+            background: #1a1a2e;
+            color: white;
+        }
         .top-controls .btn-play {
             background: linear-gradient(135deg, #667eea, #764ba2);
             color: white;
             border: none;
         }
-        .top-controls .btn-play:active { transform: scale(0.95); }
+        .top-controls .btn-play:active {
+            transform: scale(0.95);
+        }
         .top-controls label {
             display: flex;
             align-items: center;
@@ -255,11 +289,20 @@
             margin: 4px 0;
             display: none;
         }
-        .timer-display.active { display: block; }
-        .timer-display.warning { animation: blink 0.5s ease infinite; }
+        .timer-display.active {
+            display: block;
+        }
+        .timer-display.warning {
+            animation: blink 0.5s ease infinite;
+        }
         @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
+            0%,
+            100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.5;
+            }
         }
 
         .grid-wrapper {
@@ -269,6 +312,11 @@
             touch-action: none;
             -webkit-touch-callout: none;
             overflow: hidden;
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 6px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08), 0 1px 3px rgba(0, 0, 0, 0.06);
+            border: 1px solid #e0e3e7;
         }
         .grid-container {
             display: grid;
@@ -277,9 +325,9 @@
             justify-content: center;
             max-width: 100%;
             padding: 4px;
-            background: rgba(255, 255, 255, 0.02);
+            background: #ffffff;
             border-radius: 10px;
-            border: 1px solid rgba(255, 255, 255, 0.03);
+            border: 1px solid #e8eaed;
             touch-action: none;
             will-change: transform;
             transform: translateZ(0);
@@ -287,33 +335,36 @@
         }
 
         .cell {
-            width: 34px;
-            height: 34px;
+            width: var(--cell-size, 34px);
+            height: var(--cell-size, 34px);
             display: flex;
             align-items: center;
             justify-content: center;
-            background: var(--cell-bg);
+            background: #fafbfc;
             border-radius: var(--radius-cell);
-            font-size: 1rem;
+            font-size: var(--cell-font, 1rem);
             font-weight: 700;
-            color: var(--text-bright);
+            color: #1a1a1a;
             cursor: pointer;
             transition: background 0.03s ease, transform 0.03s ease;
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            text-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+            border: 1px solid #d5d8dc;
+            text-shadow: none;
             position: relative;
             touch-action: none;
             will-change: transform, background;
             transform: translateZ(0);
             -webkit-transform: translateZ(0);
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
         }
-        .cell:active { transform: scale(0.92); }
+        .cell:active {
+            transform: scale(0.92);
+        }
         .cell.selected {
             background: linear-gradient(135deg, #5b6ef5, #7c3aed);
             color: white;
             border-color: rgba(139, 92, 246, 0.5);
             transform: scale(1.05);
-            box-shadow: 0 4px 20px rgba(102, 126, 234, 0.25);
+            box-shadow: 0 4px 20px rgba(102, 126, 234, 0.35);
             z-index: 5;
         }
         .cell.found {
@@ -321,7 +372,7 @@
             color: white;
             border-color: rgba(72, 187, 120, 0.4);
             transform: scale(1.03);
-            box-shadow: 0 4px 20px rgba(72, 187, 120, 0.2);
+            box-shadow: 0 4px 20px rgba(72, 187, 120, 0.25);
         }
         .cell.found::after {
             content: '✓';
@@ -344,13 +395,18 @@
             color: white !important;
             border-color: #ed8936 !important;
             transform: scale(1.08) !important;
-            box-shadow: 0 0 25px rgba(246, 173, 85, 0.5) !important;
+            box-shadow: 0 0 25px rgba(246, 173, 85, 0.6) !important;
             animation: hintPulse 0.35s ease 3;
             z-index: 10;
         }
         @keyframes hintPulse {
-            0%, 100% { box-shadow: 0 0 25px rgba(246, 173, 85, 0.5); }
-            50% { box-shadow: 0 0 50px rgba(246, 173, 85, 0.8); }
+            0%,
+            100% {
+                box-shadow: 0 0 25px rgba(246, 173, 85, 0.6);
+            }
+            50% {
+                box-shadow: 0 0 50px rgba(246, 173, 85, 0.9);
+            }
         }
 
         .word-list {
@@ -405,7 +461,9 @@
             z-index: 2;
             font-size: 0.72rem;
         }
-        .stats .btn-reset, .stats .btn-hint, .stats .btn-next {
+        .stats .btn-reset,
+        .stats .btn-hint,
+        .stats .btn-next {
             padding: 6px 12px;
             border: none;
             border-radius: 8px;
@@ -416,15 +474,36 @@
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.04);
         }
-        .stats .btn-reset { background: rgba(252, 129, 129, 0.3); color: rgba(255, 255, 255, 0.85); }
-        .stats .btn-hint { background: rgba(246, 173, 85, 0.3); color: rgba(255, 255, 255, 0.85); }
-        .stats .btn-next { background: rgba(72, 187, 120, 0.3); color: #48bb78; display: none; }
-        .stats .btn-next.show { display: inline-block; animation: pulseBtn 1s ease infinite; }
-        @keyframes pulseBtn {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
+        .stats .btn-reset {
+            background: rgba(252, 129, 129, 0.3);
+            color: rgba(255, 255, 255, 0.85);
         }
-        .stats .btn-hint:disabled { opacity: 0.4; cursor: not-allowed; }
+        .stats .btn-hint {
+            background: rgba(246, 173, 85, 0.3);
+            color: rgba(255, 255, 255, 0.85);
+        }
+        .stats .btn-next {
+            background: rgba(72, 187, 120, 0.3);
+            color: #48bb78;
+            display: none;
+        }
+        .stats .btn-next.show {
+            display: inline-block;
+            animation: pulseBtn 1s ease infinite;
+        }
+        @keyframes pulseBtn {
+            0%,
+            100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+        .stats .btn-hint:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
 
         .message {
             text-align: center;
@@ -442,9 +521,16 @@
             position: relative;
             z-index: 2;
         }
-        .message.success { color: #48bb78; background: rgba(72, 187, 120, 0.06); }
-        .message.info { color: rgba(102, 126, 234, 0.8); }
-        .message.warning { color: #f6ad55; }
+        .message.success {
+            color: #48bb78;
+            background: rgba(72, 187, 120, 0.06);
+        }
+        .message.info {
+            color: rgba(102, 126, 234, 0.8);
+        }
+        .message.warning {
+            color: #f6ad55;
+        }
         .message.win {
             color: #f6ad55;
             background: rgba(246, 173, 85, 0.08);
@@ -457,31 +543,105 @@
             border-color: rgba(252, 129, 129, 0.08);
         }
         @keyframes winGlow {
-            0%, 100% { box-shadow: 0 0 20px rgba(246, 173, 85, 0.08); }
-            50% { box-shadow: 0 0 40px rgba(246, 173, 85, 0.15); }
+            0%,
+            100% {
+                box-shadow: 0 0 20px rgba(246, 173, 85, 0.08);
+            }
+            50% {
+                box-shadow: 0 0 40px rgba(246, 173, 85, 0.15);
+            }
         }
 
         @media (max-width: 480px) {
-            .container { padding: 10px 6px 12px; margin-top: 50px; }
-            .cell { width: 28px; height: 28px; font-size: 0.8rem; border-radius: 6px; }
-            .grid-container { gap: 2px; padding: 3px; }
-            .top-controls select, .top-controls button, .top-controls label { padding: 5px 7px; font-size: 0.62rem; }
-            .word-item { font-size: 0.58rem; padding: 2px 6px; }
-            .stats { font-size: 0.62rem; padding: 4px 6px; }
-            .watermark-top { padding: 4px 10px; top: 4px; }
-            .watermark-top .texto-creador { font-size: 0.6rem; }
-            .watermark-top .texto-creador .nombre { font-size: 0.7rem; }
+            .container {
+                padding: 10px 6px 12px;
+                margin-top: 50px;
+            }
+            .cell {
+                --cell-size: 28px;
+                --cell-font: 0.78rem;
+                border-radius: 6px;
+            }
+            .grid-container {
+                gap: 2px;
+                padding: 3px;
+            }
+            .grid-wrapper {
+                padding: 4px;
+                border-radius: 10px;
+            }
+            .top-controls select,
+            .top-controls button,
+            .top-controls label {
+                padding: 5px 7px;
+                font-size: 0.62rem;
+            }
+            .word-item {
+                font-size: 0.58rem;
+                padding: 2px 6px;
+            }
+            .stats {
+                font-size: 0.62rem;
+                padding: 4px 6px;
+            }
+            .watermark-top {
+                padding: 4px 10px;
+                top: 4px;
+            }
+            .watermark-top .texto-creador {
+                font-size: 0.6rem;
+            }
+            .watermark-top .texto-creador .nombre {
+                font-size: 0.7rem;
+            }
         }
-        @media (max-width: 360px) {
-            .cell { width: 24px; height: 24px; font-size: 0.65rem; border-radius: 4px; }
-            .grid-container { gap: 1px; padding: 2px; }
-            .header h1 { font-size: 1.1rem; }
-            .header h1 .pdh { font-size: 1.3rem; }
+        @media (max-width: 380px) {
+            .cell {
+                --cell-size: 24px;
+                --cell-font: 0.68rem;
+                border-radius: 5px;
+            }
+            .grid-container {
+                gap: 1px;
+                padding: 2px;
+            }
+            .grid-wrapper {
+                padding: 3px;
+                border-radius: 8px;
+            }
+            .header h1 {
+                font-size: 1.1rem;
+            }
+            .header h1 .pdh {
+                font-size: 1.3rem;
+            }
+        }
+        @media (max-width: 340px) {
+            .cell {
+                --cell-size: 20px;
+                --cell-font: 0.58rem;
+                border-radius: 4px;
+            }
+            .grid-container {
+                gap: 1px;
+                padding: 1px;
+            }
+            .grid-wrapper {
+                padding: 2px;
+            }
         }
         @media (min-width: 768px) {
-            .container { padding: 18px 20px; border-radius: 22px; }
-            .cell { width: 40px; height: 40px; font-size: 1.1rem; }
-            .grid-container { gap: 3px; }
+            .container {
+                padding: 18px 20px;
+                border-radius: 22px;
+            }
+            .cell {
+                --cell-size: 40px;
+                --cell-font: 1.1rem;
+            }
+            .grid-container {
+                gap: 3px;
+            }
         }
 
         .particles {
@@ -503,10 +663,20 @@
             animation: floatParticle 20s infinite linear;
         }
         @keyframes floatParticle {
-            0% { transform: translateY(105vh) translateX(0) scale(0); opacity: 0; }
-            10% { opacity: 1; }
-            90% { opacity: 1; }
-            100% { transform: translateY(-10vh) translateX(40px) scale(1); opacity: 0; }
+            0% {
+                transform: translateY(105vh) translateX(0) scale(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-10vh) translateX(40px) scale(1);
+                opacity: 0;
+            }
         }
 
         .shop-modal {
@@ -521,7 +691,9 @@
             justify-content: center;
             align-items: center;
         }
-        .shop-modal.active { display: flex; }
+        .shop-modal.active {
+            display: flex;
+        }
         .shop-content {
             background: #1a1a2e;
             padding: 20px;
@@ -532,8 +704,14 @@
             max-width: 320px;
             width: 90%;
         }
-        .shop-content h3 { margin-bottom: 12px; color: #ffd700; }
-        .shop-content p { margin: 8px 0; font-size: 0.9rem; }
+        .shop-content h3 {
+            margin-bottom: 12px;
+            color: #ffd700;
+        }
+        .shop-content p {
+            margin: 8px 0;
+            font-size: 0.9rem;
+        }
         .shop-content button {
             padding: 10px 18px;
             margin: 6px;
@@ -545,9 +723,29 @@
             width: 100%;
             color: white;
         }
-        .shop-content .btn-buy { background: linear-gradient(135deg, #667eea, #764ba2); }
-        .shop-content .btn-ad { background: linear-gradient(135deg, #f6ad55, #ed8936); }
-        .shop-content .btn-close { background: rgba(255, 255, 255, 0.1); }
+        .shop-content .btn-buy {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+        }
+        .shop-content .btn-ad {
+            background: linear-gradient(135deg, #f6ad55, #ed8936);
+        }
+        .shop-content .btn-close {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Clase para grid extremo en móvil — refuerzo */
+        .grid-extremo-mobile .cell {
+            --cell-size: 22px !important;
+            --cell-font: 0.62rem !important;
+            border-radius: 4px;
+        }
+        @media (max-width: 360px) {
+            .grid-extremo-mobile .cell {
+                --cell-size: 19px !important;
+                --cell-font: 0.55rem !important;
+                border-radius: 3px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -682,14 +880,20 @@
                     } catch (e) {}
                 }
                 select() { this._play(700, 'sine', 0.03, 0.015); }
-                found() { [523, 659, 784].forEach((f, i) => setTimeout(() => this._play(f, 'sine', 0.08, 0.03), i *
-                    40)); }
-                win() { [523, 659, 784, 1047].forEach((f, i) => setTimeout(() => this._play(f, 'triangle', 0.12,
-                        0.04), i * 70)); }
+                found() {
+                    [523, 659, 784].forEach((f, i) => setTimeout(() => this._play(f, 'sine', 0.08, 0.03), i *
+                        40));
+                }
+                win() {
+                    [523, 659, 784, 1047].forEach((f, i) => setTimeout(() => this._play(f, 'triangle', 0.12,
+                        0.04), i * 70));
+                }
                 error() { this._play(200, 'sawtooth', 0.08, 0.02); }
                 hint() { this._play(880, 'sine', 0.1, 0.025); }
-                lose() { [400, 300, 200].forEach((f, i) => setTimeout(() => this._play(f, 'sawtooth', 0.15, 0.03),
-                        i * 100)); }
+                lose() {
+                    [400, 300, 200].forEach((f, i) => setTimeout(() => this._play(f, 'sawtooth', 0.15, 0.03),
+                        i * 100));
+                }
             }
 
             // ============================================================
@@ -940,7 +1144,8 @@
             }
 
             function verAnuncio() {
-                const confirmar = confirm('📺 ¿Ver anuncio para ganar 500 monedas?\n\n(En producción se mostrará un anuncio real de AdMob)');
+                const confirmar = confirm(
+                    '📺 ¿Ver anuncio para ganar 500 monedas?\n\n(En producción se mostrará un anuncio real de AdMob)');
                 if (confirmar) {
                     setTimeout(() => {
                         monedas += 500;
@@ -965,7 +1170,6 @@
             // ============================================================
             function getTiempoPorNivel(nivel) {
                 return { facil: 300, normal: 600, dificil: 1080, superDificil: 1200 } [nivel] || 300;
-                // 5min, 10min, 18min, 20min
             }
 
             function formatearTiempo(segundos) {
@@ -1005,14 +1209,12 @@
                         msg.className = 'message lose';
                         msg.textContent = '⏰ ¡SE ACABÓ EL TIEMPO! Perdiste. Inténtalo de nuevo. 🔄';
 
-                        // Penalización
                         monedas = Math.max(0, monedas - 100);
                         guardarDatos();
                         actualizarUI();
 
                         sound.lose();
 
-                        // Mostrar botón de reinicio
                         document.getElementById('btnNext').classList.remove('show');
                     }
                 }, 1000);
@@ -1059,7 +1261,6 @@
             function obtenerPalabrasSinRepetir(tema, cantidad) {
                 const poolCompleto = palabrasPorTema[tema] || palabrasPorTema.animales;
 
-                // Inicializar registro para este tema si no existe
                 if (!palabrasUsadasGlobal[tema]) {
                     palabrasUsadasGlobal[tema] = [];
                 }
@@ -1067,11 +1268,9 @@
                 const usadas = palabrasUsadasGlobal[tema];
                 const disponibles = poolCompleto.filter(p => !usadas.includes(p));
 
-                // Si no hay suficientes palabras disponibles, reiniciar el registro
                 if (disponibles.length < cantidad) {
                     palabrasUsadasGlobal[tema] = [];
                     guardarDatos();
-                    // Usar todas las palabras del pool
                     const shuffled = [...poolCompleto].sort(() => Math.random() - 0.5);
                     const seleccionadas = shuffled.slice(0, Math.min(cantidad, poolCompleto.length));
                     palabrasUsadasGlobal[tema] = seleccionadas;
@@ -1079,11 +1278,9 @@
                     return seleccionadas;
                 }
 
-                // Mezclar disponibles y tomar la cantidad necesaria
                 const shuffled = [...disponibles].sort(() => Math.random() - 0.5);
                 const seleccionadas = shuffled.slice(0, cantidad);
 
-                // Registrar como usadas
                 palabrasUsadasGlobal[tema] = [...usadas, ...seleccionadas];
                 guardarDatos();
 
@@ -1105,7 +1302,6 @@
                 size = getSizeByNivel(nivel);
                 const numPalabras = getNumPalabras(nivel);
 
-                // Obtener palabras sin repetir
                 const palabrasSeleccionadas = obtenerPalabrasSinRepetir(tema, numPalabras);
 
                 grid = Array(size).fill().map(() => Array(size).fill(''));
@@ -1121,10 +1317,9 @@
                     [-1, 1]
                 ];
 
-                // Intentar colocar cada palabra
                 for (const palabra of palabrasSeleccionadas) {
                     let colocada = false;
-                    const intentosMax = size * size * 8; // Intentos proporcionales al tamaño
+                    const intentosMax = size * size * 8;
                     for (let intentos = 0; intentos < intentosMax && !colocada; intentos++) {
                         const dir = direcciones[Math.floor(Math.random() * direcciones.length)];
                         const row = Math.floor(Math.random() * size);
@@ -1135,7 +1330,6 @@
                             colocada = true;
                         }
                     }
-                    // Si no se pudo colocar, intentar en otra posición con backtracking simple
                     if (!colocada) {
                         for (let r = 0; r < size && !colocada; r++) {
                             for (let c = 0; c < size && !colocada; c++) {
@@ -1152,7 +1346,6 @@
                     }
                 }
 
-                // Rellenar espacios vacíos
                 const letras = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
                 for (let i = 0; i < size; i++) {
                     for (let j = 0; j < size; j++) {
@@ -1196,7 +1389,7 @@
             }
 
             // ============================================================
-            // RENDERIZADO
+            // RENDERIZADO (con ajuste dinámico de tamaño para móvil extremo)
             // ============================================================
             function buildFoundSet() {
                 foundSet = new Set();
@@ -1215,12 +1408,72 @@
                 return celdasSeleccionadas.some(c => c.row === row && c.col === col);
             }
 
+            function calcularCellSize(sizeGrid) {
+                const vw = window.innerWidth;
+                const vh = window.innerHeight;
+                const gridWrapper = document.getElementById('gridWrapper');
+                const wrapperWidth = gridWrapper ? gridWrapper.clientWidth - 20 : vw - 40;
+                let cellSize = Math.floor(wrapperWidth / sizeGrid);
+
+                // Limitar tamaño máximo
+                if (vw >= 768) {
+                    cellSize = Math.min(cellSize, 40);
+                    cellSize = Math.max(cellSize, 30);
+                } else if (vw <= 340) {
+                    cellSize = Math.min(cellSize, 20);
+                    cellSize = Math.max(cellSize, 17);
+                } else if (vw <= 380) {
+                    cellSize = Math.min(cellSize, 24);
+                    cellSize = Math.max(cellSize, 19);
+                } else if (vw <= 480) {
+                    cellSize = Math.min(cellSize, 28);
+                    cellSize = Math.max(cellSize, 21);
+                } else {
+                    cellSize = Math.min(cellSize, 34);
+                    cellSize = Math.max(cellSize, 24);
+                }
+
+                return cellSize;
+            }
+
+            function calcularFontSize(cellSize) {
+                return Math.max(0.5, cellSize / 34) + 'rem';
+            }
+
             function renderizar(fullRender = true) {
                 if (fullRender) buildFoundSet();
 
                 const container = document.getElementById('gridContainer');
+                const gridWrapper = document.getElementById('gridWrapper');
                 const sizeGrid = grid.length;
-                container.style.gridTemplateColumns = `repeat(${sizeGrid}, 1fr)`;
+
+                // Calcular tamaño de celda óptimo para el viewport actual
+                const cellSize = calcularCellSize(sizeGrid);
+                const fontSize = calcularFontSize(cellSize);
+
+                // Aplicar variables CSS
+                container.style.setProperty('--cell-size', cellSize + 'px');
+                container.style.setProperty('--cell-font', fontSize);
+                container.style.gridTemplateColumns = `repeat(${sizeGrid}, var(--cell-size, 34px))`;
+
+                // Gestionar clase para grid extremo en móvil
+                const nivel = document.getElementById('nivelSelect').value;
+                if (nivel === 'superDificil' && window.innerWidth < 480) {
+                    gridWrapper.classList.add('grid-extremo-mobile');
+                    // Reforzar tamaño aún más pequeño para 14 columnas
+                    if (window.innerWidth <= 360) {
+                        container.style.setProperty('--cell-size', '19px');
+                        container.style.setProperty('--cell-font', '0.55rem');
+                    } else if (window.innerWidth <= 400) {
+                        container.style.setProperty('--cell-size', '21px');
+                        container.style.setProperty('--cell-font', '0.6rem');
+                    } else {
+                        container.style.setProperty('--cell-size', '23px');
+                        container.style.setProperty('--cell-font', '0.65rem');
+                    }
+                } else {
+                    gridWrapper.classList.remove('grid-extremo-mobile');
+                }
 
                 if (fullRender || container.children.length === 0) {
                     let html = '';
@@ -1327,6 +1580,25 @@
             document.addEventListener('pointerup', () => { if (isSelecting) finalizarSeleccion(); });
             document.addEventListener('pointercancel', () => { if (isSelecting) finalizarSeleccion(); });
 
+            // Redimensionar al cambiar orientación
+            let resizeTimeout;
+            window.addEventListener('resize', () => {
+                clearTimeout(resizeTimeout);
+                resizeTimeout = setTimeout(() => {
+                    if (grid.length > 0) {
+                        renderizar(true);
+                    }
+                }, 250);
+            });
+
+            window.addEventListener('orientationchange', () => {
+                setTimeout(() => {
+                    if (grid.length > 0) {
+                        renderizar(true);
+                    }
+                }, 400);
+            });
+
             function renderizarPalabras() {
                 const list = document.getElementById('wordList');
                 const encontradasSet = new Set(palabrasEncontradas.map(p => p.palabra));
@@ -1349,18 +1621,15 @@
 
                 const msg = document.getElementById('message');
                 if (encont === total && total > 0 && !juegoTerminado && !juegoPerdido) {
-                    // ¡Victoria!
                     if (timerActivo) detenerTimer();
                     juegoTerminado = true;
 
-                    // Calcular monedas según nivel
                     const nivel = document.getElementById('nivelSelect').value;
                     let monedasBase = { facil: 50, normal: 100, dificil: 150, superDificil: 200 } [nivel] || 100;
                     let monedasGanadas = monedasBase;
 
-                    // Bonus por tiempo si el timer está activo
                     if (document.getElementById('timerToggle').checked && tiempoRestante > 0) {
-                        const tiempoBonus = Math.floor(tiempoRestante / 30) * 10; // 10 monedas por cada 30 segundos
+                        const tiempoBonus = Math.floor(tiempoRestante / 30) * 10;
                         monedasGanadas += tiempoBonus;
                     }
 
@@ -1628,7 +1897,6 @@
             // ============================================================
             document.getElementById('btnJugar').addEventListener('click', () => {
                 sound.resume();
-                // Reiniciar nivel si se presiona Jugar
                 if (!juegoTerminado && !juegoPerdido && palabrasEncontradas.length > 0) {
                     if (!confirm('¿Empezar nuevo juego? Se reiniciará el nivel actual.')) return;
                 }
@@ -1666,12 +1934,13 @@
             cargarDatos();
             iniciarJuego();
 
-            console.log('🔍 SOPA DE LETRAS PDH v3.0 - SAMUEL PDH');
+            console.log('🔍 SOPA DE LETRAS PDH v3.1 - SAMUEL PDH');
+            console.log('✅ Fondo blanco en la sopa de letras');
+            console.log('✅ Celdas adaptativas para modo Extremo en móvil');
             console.log('✅ 50+ palabras por categoría');
             console.log('✅ Sin repetición entre niveles');
             console.log('✅ Timer: 5min(Fácil) 10min(Normal) 18min(Difícil) 20min(Extremo)');
             console.log('✅ Sistema de monedas y tienda');
-            console.log('✅ Optimizado para todos los dispositivos');
         })();
     </script>
 </body>
