@@ -6,7 +6,5 @@
   "orientation": "any",
   "scope": "/",
   "short_name": "sopa PDH",
-  "start_url": "/",
-  "theme_color": "#4caf50",
-  "description": "juego de sopa de letras educativo"
-}
+  "start_url": "./index.html",
+  "theme_color
